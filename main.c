@@ -2,19 +2,33 @@
 #include <stdlib.h>
 
 #include "recursion.h"
+#include "complexity.h"
+#include "sorting.h"
 
 int main(int argc, char *argv[]) {
 
-	// RECURSION + LINKED LIST
-	Node* list = newNode(atoi(argv[1]));
+//	// ============================================ RECURSION + LINKED LIST.
+//	Node* list = newNode(atoi(argv[1]));
+//
+//	for (int i = 2; i < argc; i++) {
+//		appendNode(list, atoi(argv[i]));
+//	}	
+//
+//	printList(list);
+//
+//	freeList(list);
 
-	for (int i = 2; i < argc; i++) {
-		appendNode(list, atoi(argv[i]));
-	}	
 
-	printList(list);
+//	// ============================================ TIME COMPLEXITY.
+//	plotTimeComplexity();	
+//	return 0;
 
-	freeList(list);
-
-	return 0;
+	// ============================================ SORTING. 
+	demonstrateSort(selectionSort, 5);
+	demonstrateSort(bubbleSort, 5);
+	demonstrateSort(insertionSort, 5);
+	demonstrateSort(mergeSort, 5);
+	demonstrateSort(naiveQuickSort, 5);
+	demonstrateSort(medianOfThreeQuickSort, 5);
+	demonstrateSort(randomisedQuickSort, 5);
 }
