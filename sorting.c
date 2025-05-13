@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <math.h>
 
 #include "sorting.h"
 
@@ -163,3 +164,4 @@ void randomisedQuickSort(Item a[], int lo, int hi, int whoAmI) {
 	randomisedQuickSort(a, lo, pivotIndex - 1, 0);
 	randomisedQuickSort(a, pivotIndex + 1, hi, 0);
 }
+
