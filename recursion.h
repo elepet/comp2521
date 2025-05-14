@@ -12,21 +12,27 @@
 // Some applications are easier / more intuitive to implement with one method. Generally iterative methods are more space / time efficient but less succinct.
 // If the recursive call is what is returned (very last thing the function does), this is called 'tail call optimization' and it allows for recursion to be implemented without making a new stack frame every call, as the old local variables are not needed. Space complexity goes from O(n) to O(1). This is not standard but supported by GCC, Clang, and other compilers.
 
-// Singly linked list with recursive operations.
-// Node
-typedef struct Node {
-	int value;
-	struct Node* next;
-} Node;
+// Singly linked list with recursive operations. In header guards so it can be reused elsewhere.
+#ifndef RECURSION_H
 
-// Dynamically allocate a new node
-Node* newNode(int value);
+// Node. Like the functions, the struct implementation is in the .c file.
+struct node;
+typedef struct node* Node;
 
-// Free dynamically allocated node
-void freeList(Node* node);
+// Dynamically allocate a new node.
+Node newNode(int value);
 
-// Append node
-void appendNode(Node* node, int value);
+// Free all dynamically allocated memory in list.
+void freeList(Node n);
 
-// Print list
-void printList(Node* node);
+// Add node to end of list.
+void appendNode(Node n, int value);
+
+// Print list.
+void printList(Node n);
+
+// Return 2nd last node in list.
+Node get2ndLastNode(Node n);
+
+#endif
+

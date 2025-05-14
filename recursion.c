@@ -7,41 +7,43 @@
 
 #endif
 
-Node* newNode(int value) {
-	Node* node = (Node*)malloc(sizeof(Node));
-	if (!node) {
-		printf("Error: malloc failed\n");
-		return NULL;
-	}
-	node->value = value;
-	node->next = NULL;
-	return node;
+struct node {
+	int value;
+	struct node* next;
+};
+
+Node newNode(int value) {
+	Node n = (Node)malloc(sizeof(struct node));
+	n->value = value;
+	n->next = NULL;
+	return n;
 }
 
-void freeList(Node* node) {
-	if (node == NULL) {
-		
-	}
-	if (node->next == NULL) {
+void freeList(Node n) {
+	if (n->next == NULL) {
 		return;
 	}
-	freeList(node->next);
-	free(node);
+	freeList(n->next);
+	free(n);
 }
 
-void appendNode(Node* node, int value) {
-	if (node->next == NULL) {
-		node->next = newNode(value);
+void appendNode(Node n, int value) {
+	if (n->next == NULL) {
+		n->next = newNode(value);
 	} else {
-		appendNode(node->next, value);
+		appendNode(n->next, value);
 	}
 }
 
-void printList(Node* node) {
-	printf("%i\n", node->value);
-	if (node->next == NULL) {
+void printList(Node n) {
+	printf("%i\n", n->value);
+	if (n->next == NULL) {
 		return;
 	}
-	printList(node->next);
+	printList(n->next);
 }
 
+Node get2ndLastNode(Node n) {
+	if (n->next->next == NULL) return n;
+	return get2ndLastNode(n->next);
+}
