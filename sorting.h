@@ -21,6 +21,11 @@
 // Divide-and-conquer sorts split a problem into two or more subproblems, solve them recursively, then combine the results.
 // It can be shown that the lower bound on worst-case tc for comparison-based sorts is O(n * log(n)). Non-comparison based sorts exploit properties of the key data to sort it and allow for better tc.
 
+#include "standard.h"
+
+#ifndef SORTING_H
+#define SORTING_H
+
 // Change datatype of item here and macros accordingly.
 typedef int Item;
 // Macro to access key in item.
@@ -80,3 +85,5 @@ void randomisedQuickSort(Item a[], int lo, int hi, int whoAmI);
 // If radix is small, tc is O(mn), where n is no. of keys and m. is no. of symbols in each key. Radix sort outperforms comparson-based sorts when keys are short and arrays are large.
 // There is Least Significant Digit (LSD) and Most Significant Digit (MSD) versions.
 // Stable, non-adaptive, not in-place.
+
+#endif

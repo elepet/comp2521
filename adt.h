@@ -12,6 +12,11 @@
 // - Graph.
 // - Priority Queue.
 
+#include "standard.h"
+
+#ifndef ADT_H
+#define ADT_H
+
 // ============================================ STACK.
 // Last In First Out (LIFO).
 struct stack; 
@@ -58,3 +63,4 @@ int QueueSize(Queue q);
 // Get node at front of queue. Assume not empty.
 Node QueuePeek(Queue q);
 
+#endif

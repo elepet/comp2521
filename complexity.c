@@ -1,13 +1,4 @@
-#ifndef HEADERS_SEEN
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
-
 #include "complexity.h"
-
-#endif
 
 void plotTimeComplexity(int (*f)(int a[], int n, int value, int whoAmI)) {
 	// Running search on arrays of successive powers of 2, 100000 times each, and storing times.

@@ -1,14 +1,4 @@
-#ifndef HEADERS_SEEN
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
-#include <math.h>
-
 #include "sorting.h"
-
-#endif
 
 void swap(Item a[], int i, int j) {
 	Item tempI = a[i];

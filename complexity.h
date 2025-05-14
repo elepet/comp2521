@@ -19,6 +19,11 @@
 // There can also be multiple inputs and corresponding time complexities.
 // In general, each basic nested loop adds a power to n.
 
+#include "standard.h"
+
+#ifndef COMPLEXITY_H
+#define COMPLEXITY_H
+
 // Helpers.
 void plotTimeComplexity(int (*f)(int a[], int n, int value, int whoAmI));
 void demonstrateSearch(int (*f)(int a[], int n, int value, int whoAmI), int n, int value);
@@ -27,3 +32,4 @@ void demonstrateSearch(int (*f)(int a[], int n, int value, int whoAmI), int n, i
 int linearSearch(int a[], int n, int value, int whoAmI);
 int binarySearch(int a[], int n, int value, int whoAmI);
 
+#endif

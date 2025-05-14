@@ -1,11 +1,4 @@
-#ifndef HEADERS_SEEN
-
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "recursion.h"
-
-#endif
 
 struct node {
 	int value;

@@ -1,12 +1,5 @@
-#ifndef HEADERS_SEEN
-
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "recursion.h"
 #include "adt.h"
-
-#endif
 
 // Linked list implementation of stack for integers.
 struct node {
