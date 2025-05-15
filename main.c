@@ -2,37 +2,38 @@
 #include "complexity.h"
 #include "sorting.h"
 #include "adt.h"
+#include "tree.h"
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
 
-	// ============================================ RECURSION + LINKED LIST.
-	Node list = newNode(atoi(argv[1]));
-
-	for (int i = 2; i < argc; i++) {
-		appendNode(list, atoi(argv[i]));
-	}	
-
-	printList(list);
-
-	freeList(list);
-
-	// ============================================ TIME COMPLEXITY.
-
-	demonstrateSearch(linearSearch, 5, 420);
-	demonstrateSearch(binarySearch, 5, 420);
-	plotTimeComplexity(linearSearch);	
-
-	// ============================================ SORTING. 
-	demonstrateSort(selectionSort, 5);
-	demonstrateSort(bubbleSort, 5);
-	demonstrateSort(insertionSort, 5);
-	demonstrateSort(mergeSort, 5);
-	demonstrateSort(naiveQuickSort, 5);
-	demonstrateSort(medianOfThreeQuickSort, 5);
-	demonstrateSort(randomisedQuickSort, 5);
-
-	// ============================================ ADT.
+//	// ============================================ RECURSION + LINKED LIST.
+//	Node list = newNode(atoi(argv[1]));
+//
+//	for (int i = 2; i < argc; i++) {
+//		appendNode(list, atoi(argv[i]));
+//	}	
+//
+//	printList(list);
+//
+//	freeList(list);
+//
+//	// ============================================ TIME COMPLEXITY.
+//
+//	demonstrateSearch(linearSearch, 5, 420);
+//	demonstrateSearch(binarySearch, 5, 420);
+//	plotTimeComplexity(linearSearch);	
+//
+//	// ============================================ SORTING. 
+//	demonstrateSort(selectionSort, 5);
+//	demonstrateSort(bubbleSort, 5);
+//	demonstrateSort(insertionSort, 5);
+//	demonstrateSort(mergeSort, 5);
+//	demonstrateSort(naiveQuickSort, 5);
+//	demonstrateSort(medianOfThreeQuickSort, 5);
+//	demonstrateSort(randomisedQuickSort, 5);
+//
+//	// ============================================ ADT.
 //	Stack s = StackNew();
 //	StackPush(s, newNode(2));
 //	StackPush(s, newNode(7));
@@ -59,5 +60,19 @@ int main(int argc, char *argv[]) {
 //
 //	QueueFree(q);
 
+	// ============================================ TREE.
+	Tree t = newTree();
+	bstInsert(t, 1);
+	bstInsert(t, 2);
+	bstInsert(t, 3);
+	bstInsert(t, 4);
+	bstInsert(t, 5);
+
+	printTree(t);
+
+	printf("Is 4 in the tree? %d\n", bstSearch(t, 4));
+	printf("Is 8 in the tree? %d\a\n", bstSearch(t, 8));
+
+	freeTree(t);
 	return 0;
 }
