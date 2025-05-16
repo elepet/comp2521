@@ -28,14 +28,6 @@ typedef struct tode* Tode;
 struct tree;
 typedef struct tree* Tree;
 
-// Helper queue for todes. Used for print.
-struct tueue;
-typedef struct tueue* Tueue;
-Tueue TueueNew(void);
-void TueueEntueue(Tueue q, Tode n);
-void TueueTetueue(Tueue q);
-Tode get2ndLastTode(Tode n);
-
 // Dynamically allocate a new tode. Integer implementation.
 Tode newTode(int value);
 
@@ -48,8 +40,8 @@ void freeTreeFromRoot(Tode tode);
 // Free all dynamically allocated memory in tree. Assume not empty.
 void freeTree(Tree t);
 
-// Print tree from root. Do not use outside of printTree.
-void printTreeFromRoot(Tode tode);
+//// Print tree from root. Do not use outside of printTree.
+void printTreeFromRoot(Tode tode, char* prefix, int isLeft, int isRoot);
 
 // Print tree. Assume not empty.
 void printTree(Tree t);

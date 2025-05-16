@@ -3,8 +3,6 @@
 struct tode {
 	Tode left;
 	Tode right;
-	Tode next; // For queue.
-	int depth; // For queue.
 	int value;
 };
 
@@ -14,67 +12,10 @@ struct tree {
 	int h;
 };
 
-// Helper queue for todes.
-// Used for print.
-struct tueue {
-	Tode front;
-	Tode back;
-	int size;
-};
-
-Tueue TueueNew(void) {
-//	printf("TueueNew called!\n");
-	Tueue q = (Tueue)malloc(sizeof(struct tueue));
-	q->front = NULL;
-	q->back = NULL;
-	q->size = 0;
-	return q;
-}
-
-void TueueEntueue(Tueue q, Tode n) {
-//	printf("TueueEntueue called!\n");
-	if (q->back == NULL) {
-		q->front = n;
-		q->back = n;
-		q->size++;
-		return;
-	}
-	n->next = q->back;
-	q->back = n;
-	q->size++;
-}
-
-Tode get2ndLastTode(Tode n) {
-	if (n->next->next == NULL) return n;
-	return get2ndLastTode(n->next);
-}
-
-void TueueDetueue(Tueue q) {
-//	printf("TueueDetueue called!\n");
-//	printf("Tueue size: %i\n", q->size);
-	if (q->size == 1) {
-		q->front->next = NULL;
-		q->front = NULL;
-		q->back = NULL;
-	} else if (q->size == 2) {
-		q->front->next = NULL;
-		q->back->next = NULL;
-		q->front = q->back;
-	} else {
-		Tode holder = get2ndLastTode(q->back);
-		q->front->next = NULL;
-		holder->next = NULL;
-		q->front = holder;
-	}
-	q->size--;
-}
-
 Tode newTode(int value) {
 	Tode tode = (Tode)malloc(sizeof(struct tode));
 	tode->left = NULL;
 	tode->right = NULL;
-	tode->next = NULL;
-	tode->depth = 0;
 	tode->value = value;
 	return tode;
 }
@@ -98,40 +39,38 @@ void freeTree(Tree t) {
 	freeTreeFromRoot(t->root);
 }
 
-void printTreeFromRoot(Tode tode) {
-//	printf("printTreeFromRoot called!\n");
-//	printf("==============vvv\n");
-	Tueue q = TueueNew();
-	TueueEntueue(q, tode);
-	
-
-	while (q->size > 0) {
-//	printf("q->front: %p\n", q->front);
-		for (int i = 0; i < q->front->depth; i++) {
-			printf(" ");
-		}
-		printf("%d\n", q->front->value);
-
-		if (q->front->right != NULL) TueueEntueue(q, q->front->right);
-		if (q->front->left != NULL) TueueEntueue(q, q->front->left);
-
-		TueueDetueue(q);
+void printTreeFromRoot(Tode tode, char* prefix, int isLeft, int isRoot) {
+	printf("%s", prefix);
+	if (isRoot) {
+		printf("%d\n", tode->value);
+	} else if (isLeft) {
+		printf("├── l: %d\n", tode->value);
+	} else {
+		printf("└── r: %d\n", tode->value);
 	}
-	
-	free(q);
-//	printf("==============^^^\n");
+
+	char newPrefix[1000];
+	strcpy(newPrefix, prefix);
+	if (isRoot) {
+		strcat(newPrefix, "");
+	} else if (isLeft) {
+		strcat(newPrefix, "│   ");
+	} else {
+		strcat(newPrefix, "    ");
+	}
+
+	if (tode->left != NULL) printTreeFromRoot(tode->left, newPrefix, 1, 0);
+	if (tode->right != NULL) printTreeFromRoot(tode->right, newPrefix, 0, 0);
 }
 
 void printTree(Tree t) {
-	printTreeFromRoot(t->root);
+	printTreeFromRoot(t->root, "", 0, 1);
 }
 
 void insertFromRoot(Tode tode, int value) {
-//	printf("insertFromRoot called!\n");
 	if (tode->value > value) {
 		if (tode->left == NULL) {
 			Tode insertedTode = newTode(value);
-			insertedTode->depth = tode->depth + 1;
 			tode->left = insertedTode;
 			return;
 		}
@@ -140,7 +79,6 @@ void insertFromRoot(Tode tode, int value) {
 	if (tode->value < value) {
 		if (tode->right == NULL) {
 			Tode insertedTode = newTode(value);
-			insertedTode->depth = tode->depth + 1;
 			tode->right = insertedTode;
 			return;
 		}
@@ -196,8 +134,6 @@ bool bstSearch(Tree t, int value) {
 //}
 
 Tode rotate(Tree t, char leftOrRight) {
-//	printf("rotate called!\n");
-
 	if (leftOrRight == 'l') {
 		if (t->root->right == NULL) return t->root;
 		Tode holder = t->root->right;
