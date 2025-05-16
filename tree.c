@@ -3,6 +3,8 @@
 struct tode {
 	Tode left;
 	Tode right;
+	Tode next; // For queue.
+	int depth; // For queue.
 	int value;
 };
 
@@ -12,10 +14,58 @@ struct tree {
 	int h;
 };
 
+// Helper queue for todes.
+// Used for print.
+struct tueue {
+	Tode front;
+	Tode back;
+	int size;
+};
+
+Tueue TueueNew(void) {
+	Tueue q = (Tueue)malloc(sizeof(struct tueue));
+	q->size = 0;
+	return q;
+}
+
+void TueueEntueue(Tueue q, Tode n) {
+	if (q->back == NULL) {
+		q->front = n;
+		q->back = n;
+		q->size++;
+		return;
+	}
+	Tode holder = q->back;
+	q->back = n;
+	q->back->next = holder;
+	q->size++;
+}
+
+Tode get2ndLastTode(Tode n) {
+	if (n->next->next == NULL) return n;
+	return get2ndLastTode(n->next);
+}
+
+void TueueDetueue(Tueue q) {
+	if (q->size == 1) {
+		q->front = NULL;
+		q->back = NULL;
+	} else if (q->size == 2) {
+		q->front = q->back;
+	} else {
+		Tode holder = get2ndLastTode(q->back);
+		holder->next = NULL;
+		q->front = holder;
+	}
+	q->size--;
+}
+
 Tode newTode(int value) {
 	Tode tode = (Tode)malloc(sizeof(struct tode));
 	tode->left = NULL;
 	tode->right = NULL;
+	tode->next = NULL;
+	tode->depth = 0;
 	tode->value = value;
 	return tode;
 }
@@ -40,11 +90,22 @@ void freeTree(Tree t) {
 }
 
 void printTreeFromRoot(Tode tode) {
-	// Post-order traversal.
-	// TODO: Change to nicer format with level-order traversal. Will need queue.
-	if (tode->left != NULL) printTreeFromRoot(tode->left);
-	if (tode->right != NULL) printTreeFromRoot(tode->right);
-	printf("%i\n", tode->value);
+	Tueue q = TueueNew();
+	TueueEntueue(q, tode);
+	
+	while (q->size > 0) {
+		for (int i = 0; i < q->front->depth; i++) {
+			printf(" ");
+		}
+		printf("%d\n", q->front->value);
+
+		if (q->front->right != NULL) TueueEntueue(q, q->front->right);
+		if (q->front->left != NULL) TueueEntueue(q, q->front->left);
+
+		TueueDetueue(q);
+	}
+	
+	free(q);
 }
 
 void printTree(Tree t) {
@@ -55,6 +116,7 @@ void insertFromRoot(Tode tode, int value) {
 	if (tode->value > value) {
 		if (tode->left == NULL) {
 			Tode insertedTode = newTode(value);
+			insertedTode->depth = tode->depth + 1;
 			tode->left = insertedTode;
 			return;
 		}
@@ -63,6 +125,7 @@ void insertFromRoot(Tode tode, int value) {
 	if (tode->value < value) {
 		if (tode->right == NULL) {
 			Tode insertedTode = newTode(value);
+			insertedTode->depth = tode->depth + 1;
 			tode->right = insertedTode;
 			return;
 		}
@@ -76,6 +139,7 @@ Tode bstInsert(Tree t, int value) {
 		t->root = tode;
 		t->n = 1;
 		t->h = 0;
+		return t->root;
 	}
 	insertFromRoot(t->root, value);
 	return t->root;

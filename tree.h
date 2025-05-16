@@ -1,6 +1,6 @@
 // Lev K. 2025
 
-// A tree is a hierarchical data structure consisting of connected node. Each node has one parent node (except root node, which has none) and may have multiple child nodes. 
+// A tree is a hierarchical data structure consisting of connected nodes. Each node has one parent node (except root node, which has none) and may have multiple child nodes. 
 // A classic example is a file system.
 // A binary tree is where each node can have up to two child nodes, called the left and right child nodes.// A binary search tree (BST) is an ordered binary tree where all values in the left subtree are less than the value in the node and vice versa for right.
 // BSTs are efficient to search and insert/delete.
@@ -63,5 +63,15 @@ bool bstSearch(Tree t, int value);
 //
 //// Join two trees where max(t1) < min(t2) and return root of updated t2. Assume not empty.
 //Tode bstJoin(Tree t1, Tree t2);
+
+// TODO: graphic print with queue, rotations, balancing, delete, join, avl.
+
+// Helper queue for todes.
+struct tueue;
+typedef struct tueue* Tueue;
+Tueue TueueNew(void);
+void TueueEntueue(Tueue q, Tode n);
+void TueueTetueue(Tueue q);
+Tode get2ndLastTode(Tode n);
 
 #endif

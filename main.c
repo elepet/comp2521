@@ -62,11 +62,12 @@ int main(int argc, char *argv[]) {
 
 	// ============================================ TREE.
 	Tree t = newTree();
-	bstInsert(t, 1);
 	bstInsert(t, 2);
-	bstInsert(t, 3);
+	bstInsert(t, 1);
 	bstInsert(t, 4);
 	bstInsert(t, 5);
+	bstInsert(t, 2);
+	bstInsert(t, 3);
 
 	printTree(t);
 
