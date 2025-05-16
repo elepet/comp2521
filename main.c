@@ -71,6 +71,21 @@ int main(int argc, char *argv[]) {
 
 	printTree(t);
 
+	printf("\nRotated left:\n");
+
+	rotate(t, 'l');
+
+	printTree(t);
+
+	printf("\nRotated right:\n");
+
+	rotate(t, 'r');
+	rotate(t, 'r');
+
+	printTree(t);
+
+	printf("\n");
+
 	printf("Is 4 in the tree? %d\n", bstSearch(t, 4));
 	printf("Is 8 in the tree? %d\a\n", bstSearch(t, 8));
 

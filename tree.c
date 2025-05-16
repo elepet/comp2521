@@ -23,21 +23,24 @@ struct tueue {
 };
 
 Tueue TueueNew(void) {
+//	printf("TueueNew called!\n");
 	Tueue q = (Tueue)malloc(sizeof(struct tueue));
+	q->front = NULL;
+	q->back = NULL;
 	q->size = 0;
 	return q;
 }
 
 void TueueEntueue(Tueue q, Tode n) {
+//	printf("TueueEntueue called!\n");
 	if (q->back == NULL) {
 		q->front = n;
 		q->back = n;
 		q->size++;
 		return;
 	}
-	Tode holder = q->back;
+	n->next = q->back;
 	q->back = n;
-	q->back->next = holder;
 	q->size++;
 }
 
@@ -47,13 +50,19 @@ Tode get2ndLastTode(Tode n) {
 }
 
 void TueueDetueue(Tueue q) {
+//	printf("TueueDetueue called!\n");
+//	printf("Tueue size: %i\n", q->size);
 	if (q->size == 1) {
+		q->front->next = NULL;
 		q->front = NULL;
 		q->back = NULL;
 	} else if (q->size == 2) {
+		q->front->next = NULL;
+		q->back->next = NULL;
 		q->front = q->back;
 	} else {
 		Tode holder = get2ndLastTode(q->back);
+		q->front->next = NULL;
 		holder->next = NULL;
 		q->front = holder;
 	}
@@ -90,10 +99,14 @@ void freeTree(Tree t) {
 }
 
 void printTreeFromRoot(Tode tode) {
+//	printf("printTreeFromRoot called!\n");
+//	printf("==============vvv\n");
 	Tueue q = TueueNew();
 	TueueEntueue(q, tode);
 	
+
 	while (q->size > 0) {
+//	printf("q->front: %p\n", q->front);
 		for (int i = 0; i < q->front->depth; i++) {
 			printf(" ");
 		}
@@ -106,6 +119,7 @@ void printTreeFromRoot(Tode tode) {
 	}
 	
 	free(q);
+//	printf("==============^^^\n");
 }
 
 void printTree(Tree t) {
@@ -113,6 +127,7 @@ void printTree(Tree t) {
 }
 
 void insertFromRoot(Tode tode, int value) {
+//	printf("insertFromRoot called!\n");
 	if (tode->value > value) {
 		if (tode->left == NULL) {
 			Tode insertedTode = newTode(value);
@@ -180,3 +195,21 @@ bool bstSearch(Tree t, int value) {
 //	t2->root = min2;
 //}
 
+Tode rotate(Tree t, char leftOrRight) {
+//	printf("rotate called!\n");
+
+	if (leftOrRight == 'l') {
+		if (t->root->right == NULL) return t->root;
+		Tode holder = t->root->right;
+		t->root->right = holder->left;
+		holder->left = t->root;
+		t->root = holder;
+	} else if (leftOrRight == 'r') {
+		if (t->root->left == NULL) return t->root;
+		Tode holder = t->root->left;
+		t->root->left = holder->right;
+		holder->right = t->root;
+		t->root = holder;
+	}
+	return t->root;
+}

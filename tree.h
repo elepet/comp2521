@@ -1,3 +1,5 @@
+// TODO: rotations, balancing, delete, join, avl.
+
 // Lev K. 2025
 
 // A tree is a hierarchical data structure consisting of connected nodes. Each node has one parent node (except root node, which has none) and may have multiple child nodes. 
@@ -9,7 +11,9 @@
 // The height of a tree determines efficiency of many operations.
 // For a tree with n nodes, the maximum possible height is n - 1 and the minimum possible height is log2(n).
 // A tree is said to be balanced if its height is close to minimum and degenerate if its height is close ot maximum.
-
+// The structure, height, and hence performance depends on insertion order.
+// A size-balanced tree is one that for every node |size(l) - size(r)| <= 1. A height-balanced tree is one that for every node |height(l) - height(r)| <= 1. 
+// Can rotate left / right (change root left / right) to balance. Partitioning is doing this multiple times to get a specific node to be the root, usually to balance the tree.
 
 #include "standard.h"
 
@@ -23,6 +27,14 @@ typedef struct tode* Tode;
 // Tracker.
 struct tree;
 typedef struct tree* Tree;
+
+// Helper queue for todes. Used for print.
+struct tueue;
+typedef struct tueue* Tueue;
+Tueue TueueNew(void);
+void TueueEntueue(Tueue q, Tode n);
+void TueueTetueue(Tueue q);
+Tode get2ndLastTode(Tode n);
 
 // Dynamically allocate a new tode. Integer implementation.
 Tode newTode(int value);
@@ -64,14 +76,8 @@ bool bstSearch(Tree t, int value);
 //// Join two trees where max(t1) < min(t2) and return root of updated t2. Assume not empty.
 //Tode bstJoin(Tree t1, Tree t2);
 
-// TODO: graphic print with queue, rotations, balancing, delete, join, avl.
-
-// Helper queue for todes.
-struct tueue;
-typedef struct tueue* Tueue;
-Tueue TueueNew(void);
-void TueueEntueue(Tueue q, Tode n);
-void TueueTetueue(Tueue q);
-Tode get2ndLastTode(Tode n);
+// Rotate tree and return root of updated tree. Assume not empty.
+// Left -> bigger becomes root, right -> smaller becomes root.
+Tode rotate(Tree t, char leftOrRight);
 
 #endif
