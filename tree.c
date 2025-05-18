@@ -130,3 +130,25 @@ Tode bstPartition(Tode t, int i) {
 	}
 	return t;
 }
+
+Tode bstRebalance(Tode t) {
+	int n = bstSize(t);
+	if (n < 3) return t;
+	
+	t = bstPartition(t, n / 2);
+	t->left = bstRebalance(t->left);
+	t->right = bstRebalance(t->right);
+	return t;
+}
+
+//Tode bstDelete(Tode t, int value) {
+//	if (t == NULL) return NULL;
+//	if (t->value < value) bstDelete(t->left, value);
+//	if (t->value > value) bstDelete(t->right, value);
+//	if (t->value == value) {
+//		if (t->left == NULL && t->right == NULL) {
+//			
+//		}
+//	}
+//	return t;
+//}

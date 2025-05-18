@@ -85,6 +85,10 @@ int main(int argc, char *argv[]) {
 	printf("Tree partitioned around index 3:\n");
 	bstPrint(root);
 
+	root = bstRebalance(root);
+	printf("Globally size-rebalanced tree:\n");
+	bstPrint(root);
+
 	bstFree(root);
 
 	return 0;

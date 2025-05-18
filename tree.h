@@ -56,4 +56,8 @@ int bstSize(Tode t);
 // Given root tode t, find element with index i, rotate to lift it to root, return root of updated tree.
 Tode bstPartition(Tode t, int i);
 
+// Globally size-rebalance tree, return root. Assume not empty.
+// O(n * log(n)).
+Tode bstRebalance(Tode t);
+
 #endif
