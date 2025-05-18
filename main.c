@@ -61,33 +61,31 @@ int main(int argc, char *argv[]) {
 //	QueueFree(q);
 
 	// ============================================ TREE.
-	Tree t = newTree();
-	bstInsert(t, 2);
-	bstInsert(t, 1);
-	bstInsert(t, 4);
-	bstInsert(t, 5);
-	bstInsert(t, 2);
-	bstInsert(t, 3);
+	Tode root = bstInsert(bstNewTode(10), 10);
+	bstInsert(root, 5);
+	bstInsert(root, 14);
+	bstInsert(root, 30);
+	bstInsert(root, 29);
+	bstInsert(root, 32);
 
-	printTree(t);
+	printf("Tree:\n");
+	bstPrint(root);
 
-	printf("\nRotated left:\n");
+	printf("Size of the tree: %d\n", bstSize(root));
 
-	rotate(t, 'l');
+	printf("Is 4 in the tree? %d\n", bstSearch(root, 4));
+	printf("Is 5 in the tree? %d\n", bstSearch(root, 5));
 
-	printTree(t);
+	root = bstRotate(root, 'l');
 
-	printf("\nRotated right:\n");
+	printf("Tree rotated left:\n");
+	bstPrint(root);
 
-	rotate(t, 'r');
-	rotate(t, 'r');
+	root = bstPartition(root, 3);
+	printf("Tree partitioned around index 3:\n");
+	bstPrint(root);
 
-	printTree(t);
+	bstFree(root);
 
-	printf("\n");
-	printf("Is 4 in the tree? %d\n", bstSearch(t, 4));
-	printf("Is 8 in the tree? %d\a\n", bstSearch(t, 8));
-
-	freeTree(t);
 	return 0;
 }

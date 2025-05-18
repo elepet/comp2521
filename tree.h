@@ -1,4 +1,4 @@
-// TODO: rotations, balancing, delete, join, avl.
+// TODO: partitons, balancing, delete, join, avl, fix print.
 
 // Lev K. 2025
 
@@ -24,52 +24,36 @@
 struct tode;
 typedef struct tode* Tode;
 
-// Tracker.
-struct tree;
-typedef struct tree* Tree;
-
 // Dynamically allocate a new tode. Integer implementation.
-Tode newTode(int value);
+Tode bstNewTode(int value);
 
-// Dynamically allocate tree tracker.
-Tree newTree(void);
+// Free dynamically allocated memory in tree from tode t.
+void bstFree(Tode t);
 
-// Free dynamically allocated memory in tree from root. Do not use outside of freeTree.
-void freeTreeFromRoot(Tode tode);
+// Recursively print tree from tode t. Helper for bstPrint. Assume not empty.
+//void bstPrintRecurse(Tode t, char* prefix, int isLeft, int isRoot, int hasRightPeer);
+void bstPrintRecurse(Tode t, char* prefix, int isRight, int isRoot, int hasLeftPeer);
 
-// Free all dynamically allocated memory in tree. Assume not empty.
-void freeTree(Tree t);
+// Print tree from tode t.
+void bstPrint(Tode t);
 
-//// Print tree from root. Do not use outside of printTree.
-void printTreeFromRoot(Tode tode, char* prefix, int isLeft, int isRoot);
-
-// Print tree. Assume not empty.
-void printTree(Tree t);
-
-// Below are BST operations.
-
-// Insert value into tree from root. Do not use outside of bstInsert.
-void insertFromRoot(Tode tode, int value);
-
-// Insert value into tree and return root of updated tree.
+// Insert value into tree from tode t and return root of updated tree.
 // At most one node is visited per level and the no of ops per node is constant, so O(h).
-Tode bstInsert(Tree t, int value);
+Tode bstInsert(Tode t, int value);
 
-// Search for value in tree from root. Do not use outside of bstSearch.
-bool searchFromRoot(Tode tode, int value);
-
-// Return true if value is in tree and false otherwise.
+// Search for value in tree from tode t.
 // At most one node is visited per level and the no of ops per node is constant, so O(h).
-bool bstSearch(Tree t, int value);
-
-//// Return node with min value. Do not use outside of bstJoin.
-//Tode getMinFromRoot(Tode tode);
-//
-//// Join two trees where max(t1) < min(t2) and return root of updated t2. Assume not empty.
-//Tode bstJoin(Tree t1, Tree t2);
+bool bstSearch(Tode t, int value);
 
 // Rotate tree and return root of updated tree. Assume not empty.
 // Left -> bigger becomes root, right -> smaller becomes root.
-Tode rotate(Tree t, char leftOrRight);
+// Tc is O(1).
+Tode bstRotate(Tode t, char leftOrRight);
+
+// Return size of subtree from tode t. Assume not empty.
+int bstSize(Tode t);
+
+// Given root tode t, find element with index i, rotate to lift it to root, return root of updated tree.
+Tode bstPartition(Tode t, int i);
 
 #endif

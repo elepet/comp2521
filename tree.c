@@ -6,13 +6,7 @@ struct tode {
 	int value;
 };
 
-struct tree {
-	Tode root;
-	int n;
-	int h;
-};
-
-Tode newTode(int value) {
+Tode bstNewTode(int value) {
 	Tode tode = (Tode)malloc(sizeof(struct tode));
 	tode->left = NULL;
 	tode->right = NULL;
@@ -20,132 +14,119 @@ Tode newTode(int value) {
 	return tode;
 }
 
-Tree newTree() {
-	Tree t = (Tree)malloc(sizeof(struct tree));
-	t->root = NULL;
-	t->n = 0;
-	t->h = 0;
-	return t;
-}
-
-void freeTreeFromRoot(Tode tode) {
+void bstFree(Tode t) {
 	// Post-order traversal.
-	if (tode->left != NULL) freeTreeFromRoot(tode->left);
-	if (tode->right != NULL) freeTreeFromRoot(tode->right);
-	free(tode);
+	if (t->left != NULL) bstFree(t->left);
+	if (t->right != NULL) bstFree(t->right);
+	free(t);
 }
 
-void freeTree(Tree t) {
-	freeTreeFromRoot(t->root);
-}
-
-void printTreeFromRoot(Tode tode, char* prefix, int isLeft, int isRoot) {
+void bstPrintRecurse(Tode t, char* prefix, int isRight, int isRoot, int hasLeftPeer) {
 	printf("%s", prefix);
 	if (isRoot) {
-		printf("%d\n", tode->value);
-	} else if (isLeft) {
-		printf("├── l: %d\n", tode->value);
+		printf("%d\n", t->value);
+	} else if (isRight) {
+		if (hasLeftPeer) printf("├── r: %d\n", t->value);
+		else printf("└── r: %d\n", t->value);
 	} else {
-		printf("└── r: %d\n", tode->value);
-	}
+		printf("└── l: %d\n", t->value);
+	}	
 
 	char newPrefix[1000];
 	strcpy(newPrefix, prefix);
 	if (isRoot) {
 		strcat(newPrefix, "");
-	} else if (isLeft) {
-		strcat(newPrefix, "│   ");
+	} else if (isRight) {
+		if (hasLeftPeer) strcat(newPrefix, "│   ");
+		else strcat(newPrefix, "    ");
 	} else {
 		strcat(newPrefix, "    ");
 	}
 
-	if (tode->left != NULL) printTreeFromRoot(tode->left, newPrefix, 1, 0);
-	if (tode->right != NULL) printTreeFromRoot(tode->right, newPrefix, 0, 0);
+	if (t->right != NULL && t->left != NULL) bstPrintRecurse(t->right, newPrefix, 1, 0, 1);
+	if (t->right != NULL && t->left == NULL) bstPrintRecurse(t->right, newPrefix, 1, 0, 0);
+	if (t->left != NULL) bstPrintRecurse(t->left, newPrefix, 0, 0, 0);
 }
 
-void printTree(Tree t) {
-	printTreeFromRoot(t->root, "", 0, 1);
+void bstPrint(Tode t) {
+	if (t == NULL) return;
+	bstPrintRecurse(t, "", 0, 1, 0);
 }
 
-void insertFromRoot(Tode tode, int value) {
-	if (tode->value > value) {
-		if (tode->left == NULL) {
-			Tode insertedTode = newTode(value);
-			tode->left = insertedTode;
-			return;
+Tode bstInsert(Tode t, int value) {
+	if (t == NULL) {
+		Tode inserted = bstNewTode(value);
+		t = inserted;
+	}
+	if (t->value > value) {
+		if (t->left == NULL) {
+			Tode inserted = bstNewTode(value);
+			t->left = inserted;
+			return t;
 		}
-		insertFromRoot(tode->left, value);
+		bstInsert(t->left, value);
 	}
-	if (tode->value < value) {
-		if (tode->right == NULL) {
-			Tode insertedTode = newTode(value);
-			tode->right = insertedTode;
-			return;
+	if (t->value < value) {
+		if (t->right == NULL) {
+			Tode inserted = bstNewTode(value);
+			t->right = inserted;
+			return t;
 		}
-		insertFromRoot(tode->right, value);
+		bstInsert(t->right, value);
 	}
+	return t;
 }
 
-Tode bstInsert(Tree t, int value) {
-	if (t->root == NULL) {
-		Tode tode = newTode(value);
-		t->root = tode;
-		t->n = 1;
-		t->h = 0;
-		return t->root;
-	}
-	insertFromRoot(t->root, value);
-	return t->root;
-}
-
-bool searchFromRoot(Tode tode, int value) {
-	if (tode->value > value) {
-		if (tode->left == NULL) {
+bool bstSearch(Tode t, int value) {
+	if (t == NULL) return false;
+	if (t->value > value) {
+		if (t->left == NULL) {
 			return false;
 		}
-		return searchFromRoot(tode->left, value);
+		return bstSearch(t->left, value);
 	}
-	if (tode->value < value) {
-		if (tode->right == NULL) {
+	if (t->value < value) {
+		if (t->right == NULL) {
 			return false;
 		}
-		return searchFromRoot(tode->right, value);
+		return bstSearch(t->right, value);
 	}
 	return true;
 }
 
-bool bstSearch(Tree t, int value) {
-	if (t->root == NULL) return false;
-	return searchFromRoot(t->root, value);
+Tode bstRotate(Tode t, char leftOrRight) {
+	if (leftOrRight == 'l') {
+		if (t->right == NULL) return t;
+		Tode holder = t->right;
+		t->right = holder->left;
+		holder->left = t;
+		t = holder;
+	} else if (leftOrRight == 'r') {
+		if (t->left == NULL) return t;
+		Tode holder = t->left;
+		t->left = holder->right;
+		holder->right = t;
+		t = holder;
+	}
+	return t;
 }
 
-//Tode getMinFromRoot(Tode tode) {
-//	if (tode->left == NULL) return tode;
-//	getMinFromRoot(tode->left);
-//}
-//
-//Tode bstJoin(Tree t1, Tree t2) {
-//	Tode min2 = getMinFromRoot(t2->root);
-//	Tode min22 = get2ndMinFromRoot(t2->root);
-//	min22->left = NULL;
-//	min2->left = t1->root;
-//	min2->right = t2->root;
-//	t2->root = min2;
-//}
+int bstSize(Tode t) {
+	int n = 1;
+	if (t->left != NULL) n += bstSize(t->left);
+	if (t->right != NULL) n += bstSize(t->right);
+	return n;
+}
 
-Tode rotate(Tree t, char leftOrRight) {
-	if (leftOrRight == 'l') {
-		if (t->root->right == NULL) return t->root;
-		Tode holder = t->root->right;
-		t->root->right = holder->left;
-		holder->left = t->root;
-		t->root = holder;
-	} else if (leftOrRight == 'r') {
-		if (t->root->left == NULL) return t->root;
-		Tode holder = t->root->left;
-		t->root->left = holder->right;
-		holder->right = t->root;
-		t->root = holder;
+Tode bstPartition(Tode t, int i) {
+	int leftSize = 0;
+	if (t->left != NULL) leftSize = bstSize(t->left);
+	if (i < leftSize) {
+		t->left = bstPartition(t->left, i);
+		t = bstRotate(t, 'r');
+	} else if (i > leftSize) {
+		t->right = bstPartition(t->right, i - leftSize - 1);
+		t = bstRotate(t, 'l');
 	}
-	return t->root;
+	return t;
 }
