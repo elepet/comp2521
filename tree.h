@@ -1,4 +1,4 @@
-// TODO: partitons, balancing, delete, join, avl, fix print.
+// TODO: local rebalancing, delete, join, avl.
 
 // Lev K. 2025
 

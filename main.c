@@ -3,6 +3,7 @@
 #include "sorting.h"
 #include "adt.h"
 #include "tree.h"
+#include "graph.h"
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
@@ -61,35 +62,63 @@ int main(int argc, char *argv[]) {
 //	QueueFree(q);
 
 	// ============================================ TREE.
-	Tode root = bstInsert(bstNewTode(10), 10);
-	bstInsert(root, 5);
-	bstInsert(root, 14);
-	bstInsert(root, 30);
-	bstInsert(root, 29);
-	bstInsert(root, 32);
+//	Tode root = bstInsert(bstNewTode(10), 10);
+//	bstInsert(root, 5);
+//	bstInsert(root, 14);
+//	bstInsert(root, 30);
+//	bstInsert(root, 29);
+//	bstInsert(root, 32);
+//
+//	printf("Tree:\n");
+//	bstPrint(root);
+//
+//	printf("Size of the tree: %d\n", bstSize(root));
+//
+//	printf("Is 4 in the tree? %d\n", bstSearch(root, 4));
+//	printf("Is 5 in the tree? %d\n", bstSearch(root, 5));
+//
+//	root = bstRotate(root, 'l');
+//
+//	printf("Tree rotated left:\n");
+//	bstPrint(root);
+//
+//	root = bstPartition(root, 3);
+//	printf("Tree partitioned around index 3:\n");
+//	bstPrint(root);
+//
+//	root = bstRebalance(root);
+//	printf("Globally size-rebalanced tree:\n");
+//	bstPrint(root);
+//
+//	bstFree(root);
 
-	printf("Tree:\n");
-	bstPrint(root);
+	// ============================================ GRAPH.
 
-	printf("Size of the tree: %d\n", bstSize(root));
+	Graph g = GraphNew(5);
 
-	printf("Is 4 in the tree? %d\n", bstSearch(root, 4));
-	printf("Is 5 in the tree? %d\n", bstSearch(root, 5));
+	printf("Graph with %i vertices and %i edges:\n", GraphNumVertices(g), GraphNumEdges(g));
+	GraphPrint(g);
 
-	root = bstRotate(root, 'l');
+	GraphInsertEdge(g, 0, 1);
+	GraphInsertEdge(g, 1, 2);
+	GraphInsertEdge(g, 2, 3);
+	GraphInsertEdge(g, 3, 4);
+	GraphInsertEdge(g, 4, 0);
 
-	printf("Tree rotated left:\n");
-	bstPrint(root);
+	printf("Graph with %i vertices and %i edges:\n", GraphNumVertices(g), GraphNumEdges(g));
+	GraphPrint(g);
 
-	root = bstPartition(root, 3);
-	printf("Tree partitioned around index 3:\n");
-	bstPrint(root);
+	printf("Is 2 adjacent to 3? %i\n", GraphIsAdjacent(g, 2, 3));
+	printf("Is 2 adjacent to 4? %i\n", GraphIsAdjacent(g, 2, 4));
 
-	root = bstRebalance(root);
-	printf("Globally size-rebalanced tree:\n");
-	bstPrint(root);
+	GraphRemoveEdge(g, 0, 1);
+	GraphRemoveEdge(g, 1, 2);
+	GraphRemoveEdge(g, 2, 3);
 
-	bstFree(root);
+	printf("Graph with %i vertices and %i edges:\n", GraphNumVertices(g), GraphNumEdges(g));
+	GraphPrint(g);
+
+	GraphFree(g);
 
 	return 0;
 }

@@ -1,5 +1,3 @@
-// Lev K. 2025
-
 // Recursion is used to solve problems by breaking them down into simpler, smaller versions of the same problem.
 // In code, this means calling a function within itself.
 // Each function call creates a stack frame that holds local variables used in that call.
@@ -25,17 +23,20 @@ typedef struct node* Node;
 // Dynamically allocate a new node.
 Node newNode(int value);
 
-// Free all dynamically allocated memory in list.
+// Free dynamically allocated memory in list starting from node n.
 void freeList(Node n);
 
 // Add node to end of list.
 void appendNode(Node n, int value);
 
-// Print list.
-void printList(Node n);
+// Print list from starting from node n. Set newline = 1 for newlines between nodes.
+void printList(Node n, int newline);
 
 // Return 2nd last node in list.
 Node get2ndLastNode(Node n);
+
+// Delete and free 1st instance of  node with given value starting from node n. Return success.
+bool delete1stInstanceOf(Node n, int value);
 
 #endif
 
