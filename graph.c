@@ -77,3 +77,55 @@ bool GraphIsAdjacent(Graph g, int v, int w) {
 	if (b1 && b2) return true;
 	else return false;
 }
+
+// This requires a different node type for the queue, since used adjacency list for graph.
+
+//void GraphBFS(Graph g, int v) {
+//	int predecessor[10];
+//	for (int i = 0; i < 10; i++) predecessor[i] = -1;
+//	Queue q = QueueNew();
+//
+//	predecessor[v] = v;
+//	QueueEnqueue(q, g->vertArr[v]); 
+//
+//	Node movingHolder;
+//	Node vertHolder;
+//	while (QueueSize(q) != 0) {
+//		movingHolder = QueuePeek(q);
+//		vertHolder = movingHolder;
+//		QueueDequeue(q, false);
+//		while (movingHolder->next != NULL) {
+//			if (predecessor[movingHolder->next->value] == -1) {
+//				predecessor[movingHolder->next->value] = vertHolder->value;
+//				QueueEnqueue(q, g->vertArr[movingHolder->next->value]);
+//			}
+//			movingHolder = movingHolder->next;
+//		}
+//	}
+//
+//	printf("Predecessor array:\n");
+//	for (int i = 0; i < 10; i++) printf("%i: %i\n", i, predecessor[i]);	
+//	
+//	printList(QueuePeek(q), true);
+//
+//	QueueFree(q);
+//}
+
+bool GraphDFSRecurse(Graph g, int v, int w, bool visited[10]) {
+	visited[v] = true;
+	if (v == w) return true;
+	Node holder = g->vertArr[v];
+	while (holder->next != NULL) {
+		if (!visited[holder->next->value]) {
+			if (GraphDFSRecurse(g, holder->next->value, w,  visited)) return true;
+		}
+		holder = holder->next;
+	}
+	return false;
+}
+
+bool GraphDFS(Graph g, int v, int w) {
+	bool visited[10];
+	for (int i = 0; i < 10; i++) visited[i] = false;
+	return GraphDFSRecurse(g, v, w, visited);
+}

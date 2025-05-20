@@ -29,8 +29,8 @@ void freeList(Node n);
 // Add node to end of list.
 void appendNode(Node n, int value);
 
-// Print list from starting from node n. Set newline = 1 for newlines between nodes.
-void printList(Node n, int newline);
+// Print list from starting from node n. If param newline set to true add newlines between nodes.
+void printList(Node n, bool newline);
 
 // Return 2nd last node in list.
 Node get2ndLastNode(Node n);

@@ -81,18 +81,18 @@ void QueueEnqueue(Queue q, Node n) {
 	q->size++;
 }
 
-void QueueDequeue(Queue q) {
+void QueueDequeue(Queue q, bool f) {
 	if (q->size == 1) {
-		free(q->front);
+		if (f == true) free(q->front);
 		q->front = NULL;
 		q->back = NULL;
 	} else if (q->size == 2) {
-		free(q->front);
+		if (f == true) free(q->front);
 		q->front = q->back;
 	} else {
 		Node holder = get2ndLastNode(q->back);
 		holder->next = NULL;
-		free(q->front);
+		if (f == true) free(q->front);
 		q->front = holder;
 	}
 	q->size--;

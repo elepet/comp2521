@@ -83,6 +83,13 @@ int GraphNumEdges(Graph g);
 // Check adjacency.
 bool GraphIsAdjacent(Graph g, int v, int w);
 
-// DFS + BFS
+// Perform BFS from v and print predecessors.
+// Limited to 10 nodes 0~9.
+//void GraphBFS(Graph g, int v);
+
+// Perform DFS and return true if found path between vertices v and w.
+// Limited to 10 nodes 0~9.
+bool GraphDFSRecurse(Graph g, int v, int w, bool visited[10]);
+bool GraphDFS(Graph g, int v, int w);
 
 #endif

@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 //		appendNode(list, atoi(argv[i]));
 //	}	
 //
-//	printList(list);
+//	printList(list, true);
 //
 //	freeList(list);
 //
@@ -42,10 +42,10 @@ int main(int argc, char *argv[]) {
 //	StackPush(s, newNode(1));
 //	StackPop(s);
 //
-//	printList(StackPeek(s));
+//	printList(StackPeek(s), true);
 //
 //	printf("Size: %i\n", StackSize(s));
-//
+//	
 //	StackFree(s);
 //
 //	Queue q = QueueNew();
@@ -53,15 +53,15 @@ int main(int argc, char *argv[]) {
 //	QueueEnqueue(q, newNode(7));
 //	QueueEnqueue(q, newNode(4));
 //	QueueEnqueue(q, newNode(1));
-//	QueueDequeue(q);
+//	QueueDequeue(q, true);
 //
-//	printList(QueuePeek(q));
+//	printList(QueuePeek(q), true);
 //
 //	printf("Size: %i\n", QueueSize(q));
 //
 //	QueueFree(q);
-
-	// ============================================ TREE.
+//
+//      // ============================================ TREE.
 //	Tode root = bstInsert(bstNewTode(10), 10);
 //	bstInsert(root, 5);
 //	bstInsert(root, 14);
@@ -91,13 +91,10 @@ int main(int argc, char *argv[]) {
 //	bstPrint(root);
 //
 //	bstFree(root);
-
+//
 	// ============================================ GRAPH.
 
 	Graph g = GraphNew(5);
-
-	printf("Graph with %i vertices and %i edges:\n", GraphNumVertices(g), GraphNumEdges(g));
-	GraphPrint(g);
 
 	GraphInsertEdge(g, 0, 1);
 	GraphInsertEdge(g, 1, 2);
@@ -111,12 +108,17 @@ int main(int argc, char *argv[]) {
 	printf("Is 2 adjacent to 3? %i\n", GraphIsAdjacent(g, 2, 3));
 	printf("Is 2 adjacent to 4? %i\n", GraphIsAdjacent(g, 2, 4));
 
+	//GraphBFS(g, 0);
+
 	GraphRemoveEdge(g, 0, 1);
 	GraphRemoveEdge(g, 1, 2);
 	GraphRemoveEdge(g, 2, 3);
 
 	printf("Graph with %i vertices and %i edges:\n", GraphNumVertices(g), GraphNumEdges(g));
 	GraphPrint(g);
+
+	printf("Is there a path between 0 and 1 (using DFS)? %i\n", GraphDFS(g, 0, 1));
+	printf("Is there a path between 4 and 0 (using DFS)? %i\n", GraphDFS(g, 4, 0));
 
 	GraphFree(g);
 

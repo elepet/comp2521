@@ -13,9 +13,7 @@ Node newNode(int value) {
 }
 
 void freeList(Node n) {
-	if (n->next == NULL) {
-		return;
-	}
+	if (n == NULL || n->next == NULL) return;
 	freeList(n->next);
 	free(n);
 }
@@ -29,7 +27,7 @@ void appendNode(Node n, int value) {
 	}
 }
 
-void printList(Node n, int newline) {
+void printList(Node n, bool newline) {
 	if (n == NULL) return;
 	if (newline) printf("%i\n", n->value);
 	else {

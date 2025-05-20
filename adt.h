@@ -54,8 +54,8 @@ void QueueFree(Queue q);
 // Add node to end of queue.
 void QueueEnqueue(Queue q, Node n);
 
-// Remove node from front of queue.
-void QueueDequeue(Queue q);
+// Remove node from front of queue. If param f set to true, free deleted node.
+void QueueDequeue(Queue q, bool f);
 
 // Get queue size.
 int QueueSize(Queue q);
