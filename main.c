@@ -107,6 +107,7 @@ int main(int argc, char *argv[]) {
 
 	printf("Is 2 adjacent to 3? %i\n", GraphIsAdjacent(g, 2, 3));
 	printf("Is 2 adjacent to 4? %i\n", GraphIsAdjacent(g, 2, 4));
+	printf("Is there a cycle? %i\n", GraphDFSHasCycle(g, 0));
 
 	//GraphBFS(g, 0);
 
@@ -119,8 +120,23 @@ int main(int argc, char *argv[]) {
 
 	printf("Is there a path between 0 and 1 (using DFS)? %i\n", GraphDFS(g, 0, 1));
 	printf("Is there a path between 4 and 0 (using DFS)? %i\n", GraphDFS(g, 4, 0));
+	printf("Is there a cycle? %i\n", GraphDFSHasCycle(g, 0));
 
 	GraphFree(g);
+
+	Graph g1 = GraphNew(5);
+
+	GraphInsertEdge(g1, 0, 1);
+	GraphInsertEdge(g1, 2, 3);
+	GraphInsertEdge(g1, 3, 4);
+	GraphInsertEdge(g1, 2, 4);
+
+	printf("Graph with 2 connected components:\n");
+	GraphPrint(g1);
+
+	printf("Is there a cycle? %i\n", GraphDFSHasCycle(g1, 0));
+
+	GraphFree(g1);
 
 	return 0;
 }

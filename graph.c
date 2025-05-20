@@ -129,3 +129,26 @@ bool GraphDFS(Graph g, int v, int w) {
 	for (int i = 0; i < 10; i++) visited[i] = false;
 	return GraphDFSRecurse(g, v, w, visited);
 }
+
+bool GraphDFSHasCycleRecurse(Graph g, int v, int w, bool visited[10]) {
+	visited[v] = true;
+	Node holder = g->vertArr[v];
+	while (holder->next != NULL) {
+		if (holder->next->value != w) {
+			if (visited[holder->next->value]) return true;
+			else if (GraphDFSHasCycleRecurse(g, holder->next->value, v, visited)) return true;
+		}
+		holder = holder->next;
+	}
+	return false;
+}
+
+bool GraphDFSHasCycle(Graph g, int v) {
+	bool visited[10];
+	for (int i = 0; i < 10; i++) visited[i] = false;
+	for (int i = 0; i < g->nV; i++)
+		if (visited[i] == false)
+			 if (GraphDFSHasCycleRecurse(g, v, v, visited)) return true;
+	return false;
+}
+

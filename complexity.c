@@ -1,3 +1,5 @@
+// TODO: Add sorted array option
+
 #include "complexity.h"
 
 void plotTimeComplexity(int (*f)(int a[], int n, int value, int whoAmI)) {

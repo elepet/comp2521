@@ -92,4 +92,10 @@ bool GraphIsAdjacent(Graph g, int v, int w);
 bool GraphDFSRecurse(Graph g, int v, int w, bool visited[10]);
 bool GraphDFS(Graph g, int v, int w);
 
+// Perform DFS and return true if found cycle.
+// Works for multiple connected nodes.
+// Limited to 10 nodes 0~9.
+bool GraphDFSHasCycleRecurse(Graph g, int v, int w, bool visited[10]);
+bool GraphDFSHasCycle(Graph g, int v);
+
 #endif
