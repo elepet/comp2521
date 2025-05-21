@@ -48,13 +48,20 @@
 // A digraph is strongly connected if there is a directed path from every vertex to every other.
 // A strongly-connected component is a maximally strongly-connected subgraph.
 // A digraph that is not strongly connected has two or more strongly-connected components.
+// Digraph representations are the same as undirected graphs.
+// Representations are changed as follows for each representation:
+// - Adjacency matrix. Store weight in each cell (not just t/f). Also need value to represent no edge.
+// - Adjacency list. Store weight as node value and use node no. in list to represent index.
+// - Array of edges. Add weight to each edge.
 
 #include "standard.h"
 
 #ifndef GRAPH_H
 #define GRAPH_H
 
-// Integer implementation.
+// ============================================ UNWEIGHTED UNDIRECTED.
+
+// Node indices are integers, denoted by v and w.
 
 struct graph;
 typedef struct graph *Graph;
@@ -89,13 +96,35 @@ bool GraphIsAdjacent(Graph g, int v, int w);
 
 // Perform DFS and return true if found path between vertices v and w.
 // Limited to 10 nodes 0~9.
+// O(V + E).
 bool GraphDFSRecurse(Graph g, int v, int w, bool visited[10]);
 bool GraphDFS(Graph g, int v, int w);
 
 // Perform DFS and return true if found cycle.
 // Works for multiple connected nodes.
 // Limited to 10 nodes 0~9.
+// O(V + E).
 bool GraphDFSHasCycleRecurse(Graph g, int v, int w, bool visited[10]);
 bool GraphDFSHasCycle(Graph g, int v);
+
+// ============================================ WEIGHTED DIRECTED.
+
+// These do the same as their above equivalents but for weighted and directed graphs.
+// Here, vI and wI are node indices while vW and wW are their corresponding weights.
+// Limited to 10 nodes 0~9.
+// Instead of the value of a node being the index of the neighbour, it is the weight of the edge to that neighbour and its order in the list is the index of the neighbour.
+// Absent edges have value == -1, so this implementation only works for non-negative weights.
+// If the weight for an edge is only present in the neighbours list of one node, this means it is one-way.
+// Functions above that are not here can be used for both unw/und and w/d graphs.
+// Two-way edges count as two edges.
+
+Graph WDGraphNew(void);
+void WDGraphInsertEdge(Graph g, int vI, int vW, int wI, int wW);
+void WDGraphRemoveEdge(Graph g, int vI, int wI);
+bool WDGraphIsAdjacent(Graph g, int vI, int wI);
+bool WDGraphDFSRecurse(Graph g, int vI, int wI, bool visited[10]);
+bool WDGraphDFS(Graph g, int vI, int wI);
+bool WDGraphDFSHasCycleRecurse(Graph g, int vI, bool visited[10], bool onStack[10]);
+bool WDGraphDFSHasCycle(Graph g, int vI);
 
 #endif

@@ -138,5 +138,31 @@ int main(int argc, char *argv[]) {
 
 	GraphFree(g1);
 
+	Graph g2 = WDGraphNew();
+
+	WDGraphInsertEdge(g2, 0, 22, 1, 22);
+	WDGraphInsertEdge(g2, 0, 81, 5, -1);
+	WDGraphInsertEdge(g2, 5, 116, 6, -1);
+	WDGraphInsertEdge(g2, 6, 79, 1, -1);
+	WDGraphInsertEdge(g2, 0, 666, 6, -1);
+	
+	printf("Directed weighted graph with %i vertices and %i edges:\n", GraphNumVertices(g2), GraphNumEdges(g2));
+	GraphPrint(g2);
+	printf("Is there a path between 0 and 1 (using DFS)? %i\n", WDGraphDFS(g, 0, 1));
+	printf("Is there a path between 4 and 0 (using DFS)? %i\n", WDGraphDFS(g, 4, 0));
+	printf("Is there a cycle? %i\n", WDGraphDFSHasCycle(g, 0));
+
+	WDGraphRemoveEdge(g2, 1, 0);
+	WDGraphRemoveEdge(g2, 5, 6);
+	WDGraphRemoveEdge(g2, 6, 1);
+
+	printf("Same DW graph but with some edges removed:\n");
+	GraphPrint(g2);
+	printf("Is there a cycle? %i\n", WDGraphDFSHasCycle(g, 0));
+
+	GraphFree(g2);
+
+
 	return 0;
+
 }
