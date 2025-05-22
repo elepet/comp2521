@@ -29,10 +29,18 @@ void appendNode(Node n, int value) {
 
 void printList(Node n, bool newline) {
 	if (n == NULL) return;
-	if (newline) printf("%i\n", n->value);
-	else {
-		if (n->next == NULL) printf("%i", n->value);
-		else printf("%i, ", n->value);
+	if (newline) {
+		if (n->value == -1) printf("-\n");	
+		else printf("%i\n", n->value);
+	} else {
+		if (n->next == NULL) {
+			if (n->value == -1) printf("-");
+			else printf("%i", n->value);
+		}
+		else {
+			if (n->value == -1) printf("-	");
+			else printf("%i	", n->value);
+		}
 	}
 	if (n->next == NULL) {
 		return;
@@ -71,4 +79,14 @@ bool delete1stInstanceOf(Node n, int value) {
 	}
 	delete1stInstanceOf(n->next, value);
 	return false; // Silence warning. Not logic.
+}
+
+int countListRecurse(Node n, int counter) {
+	if (n->next != NULL) counter = countListRecurse(n->next, counter + 1);
+	return counter;
+}
+
+int countList(Node n) {
+	if (n == NULL) return 0;
+	else return countListRecurse(n, 1);
 }

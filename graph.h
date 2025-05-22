@@ -127,4 +127,10 @@ bool WDGraphDFS(Graph g, int vI, int wI);
 bool WDGraphDFSHasCycleRecurse(Graph g, int vI, bool visited[10], bool onStack[10]);
 bool WDGraphDFSHasCycle(Graph g, int vI);
 
+// If shortestPath == true, print the shortest path between vI and wI.
+// Else print the shortest path between source node and every other node.
+// Shortest path here means minimum total weight.
+void WDGraphDijkstra(Graph g, int vI, bool shortestPath, int wI);
+
 #endif
+

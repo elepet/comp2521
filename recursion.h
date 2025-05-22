@@ -38,5 +38,11 @@ Node get2ndLastNode(Node n);
 // Delete and free 1st instance of  node with given value starting from node n. Return success.
 bool delete1stInstanceOf(Node n, int value);
 
+// Helper for countList.
+int countListRecurse(Node n, int counter);
+
+// Return list size.
+int countList(Node n);
+
 #endif
 

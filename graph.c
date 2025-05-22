@@ -249,3 +249,72 @@ bool WDGraphDFSHasCycle(Graph g, int vI) {
 			 if (WDGraphDFSHasCycleRecurse(g, vI, visited, onStack)) return true;
 	return false;
 }
+
+void WDGraphDijkstra(Graph g, int vI, bool shortestPath, int wI) {
+	int dist[10];
+	int pred[10];
+	bool vSet[10];
+	for (int i = 0; i < 10; i++) dist[i] = INT_MAX;
+	for (int i = 0; i < 10; i++) pred[i] = -1;
+	for (int i = 0; i < 10; i++) vSet[i] = true;
+	int vNum = 10;
+	int dMin = INT_MAX;
+	int curV = vI;
+	int iMin = curV;
+	dist[vI] = 0;
+	vSet[vI] = false;
+	Node holder = g->vertArr[vI];
+	int i = 0;
+
+	while (vNum > 0) {
+		dMin = INT_MAX;
+		iMin = curV;
+		i = 0;
+		while (holder->next != NULL) {
+			if (holder->next->value != -1) {
+				if (vSet[i]) {
+					dist[i] = holder->next->value;
+					if (dist[i] < dMin) {
+						dMin = dist[i];
+						iMin = i;
+					}
+					pred[i] = curV;
+					vSet[i] = false;
+					vNum--;
+				} else if (dist[curV] + holder->next->value < dist[i]) {
+					dist[i] = dist[curV] + holder->next->value;
+					pred[i] = curV;
+				}
+			}
+			holder = holder->next;
+			i++;
+		}
+		if (curV == iMin) {
+			if (curV + 1 < 10) {
+				curV++;
+				holder = g->vertArr[curV];
+			} else break;
+		} else holder = g->vertArr[iMin];
+	}
+	
+	if (shortestPath) {
+		printf("Shortest path from %i to %i (using Dijkstra):\n", vI, wI);
+		i = wI;
+		char s[100];
+		sprintf(s, "%i", i);
+		printf("%s", s);
+		do {
+			printf("<-");
+			sprintf(s, "%i", pred[i]);
+			printf("%s", s);
+			i = pred[i];
+		} while (i != 0);
+		printf("\n");
+	} else {
+		printf("Shortest distances from %i to each other vertex (using Dijkstra):\n", vI);
+		for (int i = 0; i < 10; i++) {
+			if (dist[i] == INT_MAX)	printf("%i: -\n", i);
+			else printf("%i: %i\n", i, dist[i]);
+		}
+	}
+}

@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
 
-//	// ============================================ RECURSION + LINKED LIST.
+	// ============================================ RECURSION + LINKED LIST.
 //	Node list = newNode(atoi(argv[1]));
 //
 //	for (int i = 2; i < argc; i++) {
@@ -16,6 +16,8 @@ int main(int argc, char *argv[]) {
 //	}	
 //
 //	printList(list, true);
+//	
+//	printf("Size: %i\n", countList(list));
 //
 //	freeList(list);
 //
@@ -151,6 +153,9 @@ int main(int argc, char *argv[]) {
 	printf("Is there a path between 0 and 1 (using DFS)? %i\n", WDGraphDFS(g, 0, 1));
 	printf("Is there a path between 4 and 0 (using DFS)? %i\n", WDGraphDFS(g, 4, 0));
 	printf("Is there a cycle? %i\n", WDGraphDFSHasCycle(g, 0));
+
+	WDGraphDijkstra(g2, 0, false, 0);
+	WDGraphDijkstra(g2, 0, true, 6);
 
 	WDGraphRemoveEdge(g2, 1, 0);
 	WDGraphRemoveEdge(g2, 5, 6);
