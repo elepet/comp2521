@@ -27,6 +27,8 @@
 // Note: both the key and value are stored in the slot.
 // Clustering is a problem with linear probing, where items tend to accumulate in long contiguous runs.
 // An important statistic for analysing collision methods is the load faction α = M / N (items to slots).
+// Double hashing uses relatively prime numbers to ensure that all slots are visited. Reduces clustering.
+// Relatively prime numbers are those for which their greatest common divisor is 1, meaning they share no factors other than 1. Eg. 8 and 9.
 
 #include "standard.h"
 
@@ -38,8 +40,9 @@
 struct set;
 typedef struct set* Set;
 
-// Helper hash function.
-int hash(int key, int N); 
+// Helper hash functions.
+int hash(int key);
+int hash2(int key);
 
 // Return new empty set.
 Set SetNew(void);
