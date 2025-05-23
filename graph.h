@@ -54,6 +54,13 @@
 // - Adjacency list. Store weight as node value and use node no. in list to represent index.
 // - Array of edges. Add weight to each edge.
 
+// A spanning tree of an undirected graph is a subgraph that contains all the vertices, is connected, and contains no cycles.
+// A minimum spanning tree (MST) of an undirected weighted graph is a spanning tree that has minimum total edge weight among all spanning trees for that graph.
+// Useful anywhere where we want to connect nodes as cheaply as possible.
+// Two algorithms to contruct MSTs from graphs:
+// - Kruskal's algorithm. Start with empty graph with same vertices as original graph. Consider edges by ascending weight and add each if it does not form a cycle in the MST. Repeat until V - 1 edges have been added. O(E * V) using adjacency list and O(E * log(V)) using union-find. Better for sparse graphs.
+// - Prim's algorithm. Start with empty graph with same vertices as original graph. Start from any vertex and add it to the MST. Choose cheapest edge such that source has been added to MST while target hasn't and add it and the target vertex to the MST. Repeat until V - 1 edges have been added. O(V * E) using set of edges and O(E + V * log(V)) using Fibonacci heap. Better for dense graphs.
+
 #include "standard.h"
 
 #ifndef GRAPH_H
