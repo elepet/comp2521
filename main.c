@@ -5,6 +5,7 @@
 #include "tree.h"
 #include "graph.h"
 #include "hash.h"
+#include "pq.h"
 
 int main(int argc, char *argv[]) {
 	srand(time(NULL));
@@ -167,41 +168,63 @@ int main(int argc, char *argv[]) {
 //	printf("Is there a cycle? %i\n", WDGraphDFSHasCycle(g, 0));
 //
 //	GraphFree(g2);
+//
+//
+//	// ============================================ HASH TABLE.
+//	Set s = SetNew();
+//
+//	SetInsert(s, 52);
+//	SetInsert(s, 61);
+//	SetInsert(s, 32);
+//	SetInsert(s, 44);
+//	SetInsert(s, 11);
+//	SetInsert(s, 11);
+//	SetInsert(s, 99);
+//	SetInsert(s, 65);
+//	SetInsert(s, 75);
+//	SetInsert(s, 112);
+//	SetInsert(s, 4442);
+//	SetInsert(s, 632);
+//	SetInsert(s, 6);
+//
+//	printf("Set:\n");
+//	SetPrint(s);
+//	
+//	printf("Number of items (M): %i\n", SetNumItems(s));
+//	printf("Number of slots (N): %i\n", SetNumSlots(s));
+//	printf("Load factor (α = M / N): %.2f\n", (float)SetNumItems(s) / (float)SetNumSlots(s));
+//	printf("Contains 32? %i\n", SetContains(s, 32));
+//
+//	SetDelete(s, 32);
+//	printf("Set with 32 deleted:\n");
+//	SetPrint(s);
+//	printf("Contains 32? %i\n", SetContains(s, 32));
+//
+//
+//	SetFree(s);
 
-
-	// ============================================ HASH TABLE.
-	Set s = SetNew();
-
-	SetInsert(s, 52);
-	SetInsert(s, 61);
-	SetInsert(s, 32);
-	SetInsert(s, 44);
-	SetInsert(s, 11);
-	SetInsert(s, 11);
-	SetInsert(s, 99);
-	SetInsert(s, 65);
-	SetInsert(s, 75);
-	SetInsert(s, 112);
-	SetInsert(s, 4442);
-	SetInsert(s, 632);
-	SetInsert(s, 6);
-
-	printf("Set:\n");
-	SetPrint(s);
+	// ============================================ PQ + HEAP.
 	
-	printf("Number of items (M): %i\n", SetNumItems(s));
-	printf("Number of slots (N): %i\n", SetNumSlots(s));
-	printf("Load factor (α = M / N): %.2f\n", (float)SetNumItems(s) / (float)SetNumSlots(s));
-	printf("Contains 32? %i\n", SetContains(s, 32));
+	Pq pq = PqNew();
+	PqInsert(pq, 1, 69);
+	PqInsert(pq, 2, 112);
+	PqInsert(pq, 3, 323);
+	PqInsert(pq, 4, 12);
+	PqInsert(pq, 5, 1001);
 
-	SetDelete(s, 32);
-	printf("Set with 32 deleted:\n");
-	SetPrint(s);
-	printf("Contains 32? %i\n", SetContains(s, 32));
+	printf("Priority queue (binary heap implementation):\n");
+	PqPrint(pq);
+	
+	free(PqDelete(pq));
+	free(PqDelete(pq));
 
+	printf("Same PQ with some items deleted:\n");
+	PqPrint(pq);
 
-	SetFree(s);
+	printf("Highest priority value? %i\n", PqPeek(pq));
+	printf("Is empty? %i\n", PqIsEmpty(pq));
 
+	PqFree(pq);
 	return 0;
 
 }
